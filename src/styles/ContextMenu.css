@@ -1,0 +1,37 @@
+.context-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  min-width: 100px;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  background-color: #282c34;
+  border: 1px solid #ccc;
+  color: #ccc;
+  border-radius: 4px;
+}
+
+.context-menu.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.context-menu .context-menu-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.context-menu .context-menu-option:hover {
+  background-color: #1a1d23;
+}
+
+.context-menu .context-menu-option .context-menu-option-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
