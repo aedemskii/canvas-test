@@ -51,7 +51,7 @@ export const renderAimLine = (ctx: CanvasRenderingContext2D, start: Point, pullO
   let angle = Math.atan2(pullOffset.y - start.y, pullOffset.x - start.x);
   let newX = start.x - length * Math.cos(angle);
   let newY = start.y - length * Math.sin(angle);
-  ctx.strokeStyle = '#000';
+  ctx.strokeStyle = '#fff';
   while (length > 0) {
     if (pointWithinBorders({ x: newX, y: newY })) {
       ctx.lineTo(newX, newY);
@@ -62,9 +62,6 @@ export const renderAimLine = (ctx: CanvasRenderingContext2D, start: Point, pullO
       newY = borderCollusionPoint.y;
       ctx.lineTo(newX, newY);
       length -= Math.sqrt((newX - start.x) ** 2 + (newY - start.y) ** 2);
-      if (length < 2 * BR) {
-        break;
-      }
       if (newX === POOL_TABLE_WIDTH - PTB) {
         angle = Math.PI - angle;
       } else if (newX === PTB) {
@@ -78,15 +75,6 @@ export const renderAimLine = (ctx: CanvasRenderingContext2D, start: Point, pullO
       newY = newY - length * Math.sin(angle);
     }
   }
-  ctx.stroke();
-
-  const arrowSize = 10;
-  ctx.beginPath();
-  ctx.moveTo(newX, newY);
-  ctx.lineTo(newX + arrowSize * Math.cos(angle - Math.PI / 6), newY + arrowSize * Math.sin(angle - Math.PI / 6));
-  ctx.moveTo(newX, newY);
-  ctx.lineTo(newX + arrowSize * Math.cos(angle + Math.PI / 6), newY + arrowSize * Math.sin(angle + Math.PI / 6));
-  ctx.strokeStyle = '#000';
   ctx.stroke();
 };
 
