@@ -146,7 +146,7 @@ const Pool: React.FC = () => {
     if (selectedBallIndex === -1) {
       return;
     }
-    const newBalls = balls.map((ball, index) => index === selectedBallIndex ? {...ball, color} : ball);
+    const newBalls = balls.map((ball, index) => index === selectedBallIndex ? new Ball(ball.getPosition(), color) : ball);
     setBalls(newBalls as Ball[]);
   };
 
