@@ -12,6 +12,7 @@ import {
 } from '../assets/types';
 import { Ball } from '../assets/classes';
 import {
+  clearCanvas,
   getInitialBalls,
   renderBalls,
   getBallUnderCursorIndex,
@@ -55,7 +56,7 @@ const Pool: React.FC = () => {
     }
     canvasContext.clearRect(0, 0, POOL_TABLE_WIDTH, POOL_TABLE_HEIGHT);
     if ((playerAction === PLAYER_ACTION.AIM) && (selectedBallIndex !== -1) && mouseMoveCoords) {
-      renderAimLine(canvasContext, balls[selectedBallIndex].position, mouseMoveCoords);
+      renderAimLine(canvasContext, balls[selectedBallIndex].getPosition(), mouseMoveCoords);
     }
     renderBalls(canvasContext, balls);
   }, [mouseMoveCoords, balls, canvasContext]);
@@ -107,7 +108,23 @@ const Pool: React.FC = () => {
     setPlayerAction(PLAYER_ACTION.AIM);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('keydown', handleKeyDown);
   };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      if (!canvasContext) {
+        return;
+      }
+      setPlayerAction(PLAYER_ACTION.NONE);
+      setSelectedBallIndex(-1);
+      clearCanvas(canvasContext);
+      renderBalls(canvasContext, balls);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }
 
   const handleMouseMove = (event: MouseEvent) => {
     if (!canvasRef.current) {
@@ -130,7 +147,7 @@ const Pool: React.FC = () => {
       return;
     }
     const newBalls = balls.map((ball, index) => index === selectedBallIndex ? {...ball, color} : ball);
-    setBalls(newBalls);
+    setBalls(newBalls as Ball[]);
   };
 
   return (
