@@ -206,8 +206,8 @@ const handleCollision = (ball1: Ball, ball2: Ball) => {
   ball1.addMomentum({ x: impulse * normalX, y: impulse * normalY })
   ball2.addMomentum({ x: -impulse * normalX, y: -impulse * normalY })
   // TODO: fix balls overlapping hack
-  ball1.movePosition({ x: Math.sign(dx), y: Math.sign(dy) });
-  ball2.movePosition({ x: -Math.sign(dx), y: -Math.sign(dy) });
+  ball1.movePosition({ x: Math.sign(dx) / 2, y: Math.sign(dy) / 2 });
+  ball2.movePosition({ x: -Math.sign(dx) / 2, y: -Math.sign(dy) / 2 });
 };
 
 const animateBalls = (ctx: CanvasRenderingContext2D, balls: Ball[]) => {
